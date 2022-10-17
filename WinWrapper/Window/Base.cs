@@ -1,0 +1,32 @@
+﻿using System.Runtime.CompilerServices;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+namespace WinWrapper;
+
+public partial struct Window
+{
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private Window(HWND Handle)
+    {
+        this.Handle = new HWND(Handle);
+    }
+    /// <summary>
+    /// Retrives the <see cref="HWND"/> of the <see cref="Window"/>
+    /// </summary>
+    public readonly HWND Handle;
+    /// <summary>
+    /// Check if <see cref="Window"/> is a valid window
+    /// </summary>
+    public bool IsValid
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => PInvoke.IsWindow(Handle);
+    }
+    /// <summary>
+    /// Returns the readable string representation of <see cref="Window"/>
+    /// </summary>
+    public override string ToString()
+    {
+        return IsValid ? $"Window {Handle.Value} ({TitleText})" : $"Invalid Window ({Handle.Value})";
+    }
+}

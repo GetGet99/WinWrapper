@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinWrapper", "WinWrapper\WinWrapper.csproj", "{018E6411-8711-48F3-83CC-78A608057E4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{018E6411-8711-48F3-83CC-78A608057E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{018E6411-8711-48F3-83CC-78A608057E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{018E6411-8711-48F3-83CC-78A608057E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{018E6411-8711-48F3-83CC-78A608057E4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD6CCFAE-BAE8-4650-8A78-8000FF1D7F07}
+	EndGlobalSection
+EndGlobal
