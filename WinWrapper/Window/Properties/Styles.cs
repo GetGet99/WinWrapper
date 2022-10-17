@@ -15,7 +15,7 @@ partial struct Window
         get => (WINDOW_STYLE)GetWindowLong(WINDOW_LONG_PTR_INDEX.GWL_STYLE);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => PInvoke.SetWindowLong(Handle, WINDOW_LONG_PTR_INDEX.GWL_STYLE, (int)value).ThrowOnFailure();
+        set => _ = PInvoke.SetWindowLongPtr(Handle, WINDOW_LONG_PTR_INDEX.GWL_STYLE, (nint)value);
     }
     /// <summary>
     /// Get or set the Extended Style of the <see cref="Window"/>
@@ -26,6 +26,6 @@ partial struct Window
         get => (WINDOW_EX_STYLE)GetWindowLong(WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => PInvoke.SetWindowLong(Handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)value).ThrowOnFailure();
+        set => _ = PInvoke.SetWindowLongPtr(Handle, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (nint)value);
     }
 }

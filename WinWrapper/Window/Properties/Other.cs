@@ -21,7 +21,7 @@ partial struct Window
                 Span<char> chars = stackalloc char[TitleTextLength + 1];
                 fixed (char* charptr = chars)
                 {
-                    PInvoke.GetWindowText(Handle, new PWSTR(charptr), TitleTextLength + 1).ThrowOnFailure();
+                    PInvoke.GetWindowText(Handle, new PWSTR(charptr), TitleTextLength + 1);
                 }
                 return new string(chars[..^1]);
             }

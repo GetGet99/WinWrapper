@@ -24,7 +24,7 @@ partial struct Window
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
-            PInvoke.SetWindowLong(Handle, WINDOW_LONG_PTR_INDEX.GWLP_HWNDPARENT, (int)value.Handle.Value).ThrowOnFailure();
+            _ = PInvoke.SetWindowLongPtr(Handle, WINDOW_LONG_PTR_INDEX.GWL_HWNDPARENT, value.Handle.Value);
         }
     }
 
