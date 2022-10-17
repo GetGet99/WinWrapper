@@ -63,3 +63,5 @@ GetMonitorInfo
 
 MONITORINFOF_PRIMARY
 
+
+GetCursorPos
