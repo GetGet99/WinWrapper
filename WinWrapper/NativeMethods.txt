@@ -18,6 +18,10 @@ GetCurrentProcess
 GetCurrentThread
 GetWindowThreadProcessId
 
+
+GetActiveWindow
+SetActiveWindow
+
 GetWindow
 WindowFromPoint
 
@@ -65,3 +69,6 @@ MONITORINFOF_PRIMARY
 
 
 GetCursorPos
+
+LoadImage
+WM_SETICON

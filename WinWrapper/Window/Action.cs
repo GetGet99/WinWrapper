@@ -13,12 +13,23 @@ partial struct Window
     public void TryClose() => PInvoke.SendMessage(Handle, PInvoke.WM_CLOSE, 0, 0);
 
     /// <summary>
+    /// Send the <see cref="PInvoke.WM_CLOSE"/> signel to the target <see cref="Window"/>
+    /// </summary>
+    public async Task TryCloseAsync() => await Task.Run(TryClose);
+
+    /// <summary>
     /// Focus the <see cref="Window"/>
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Focus()
         => PInvoke.SetFocus(Handle);
 
+    /// <summary>
+    /// Activate the <see cref="Window"/>
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Activate()
+        => PInvoke.SetActiveWindow(Handle);
 
     /// <summary>
     /// Shows the <see cref="Window"/>
@@ -31,4 +42,6 @@ partial struct Window
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Hide() => IsVisible = true;
+
+
 }

@@ -29,4 +29,16 @@ public partial struct Window
     {
         return IsValid ? $"Window {Handle.Value} ({TitleText})" : $"Invalid Window ({Handle.Value})";
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool Equals(Window other)
+        => this == other;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator ==(Window left, Window right)
+        => right.Handle.Value == left.Handle.Value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator !=(Window left, Window right)
+        => right.Handle.Value == left.Handle.Value;
 }

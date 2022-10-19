@@ -5,7 +5,7 @@ using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
 namespace WinWrapper;
 
-partial struct Window
+partial struct Window : IEquatable<Window>
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Window FromLocation(int X, int Y) => FromLocation(new Point(X, Y));
@@ -13,6 +13,12 @@ partial struct Window
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Window FromLocation(Point pt)
         => new(PInvoke.WindowFromPoint(pt));
+
+    public static Window InFocus
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => new(PInvoke.GetActiveWindow());
+    }
 
     public static Window CreateNewWindow(string Title, Rectangle Bounds = default)
     {
