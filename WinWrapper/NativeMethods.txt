@@ -22,6 +22,9 @@ GetWindowThreadProcessId
 GetActiveWindow
 SetActiveWindow
 
+GetClassLong
+LoadIcon
+
 GetWindow
 WindowFromPoint
 

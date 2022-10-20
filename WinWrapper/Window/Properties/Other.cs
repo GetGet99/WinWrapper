@@ -94,7 +94,9 @@ partial struct Window
         {
             try
             {
-                return Icon.FromHandle(PInvoke.DefWindowProc(Handle, PInvoke.WM_GETICON, 2, 0));
+                var handle = (nint)PInvoke.DefWindowProc(Handle, PInvoke.WM_GETICON, 2, 0);
+                if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICONSM);
+                return Icon.FromHandle(handle);
             }
             catch
             {
@@ -109,7 +111,9 @@ partial struct Window
         {
             try
             {
-                return Icon.FromHandle(PInvoke.DefWindowProc(Handle, PInvoke.WM_GETICON, default, default));
+                var handle = (nint)PInvoke.DefWindowProc(Handle, PInvoke.WM_GETICON, 1, 0);
+                if (handle == 0) handle = (nint)PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICON);
+                return Icon.FromHandle(handle);
             }
             catch
             {

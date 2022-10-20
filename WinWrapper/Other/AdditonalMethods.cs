@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Win32.Foundation;
 
 namespace Windows.Win32;
 #pragma warning disable CA1401
@@ -30,4 +31,21 @@ partial class PInvoke
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [SupportedOSPlatform("windows5.0")]
     public static extern int SetWindowLongPtr(Foundation.HWND hWnd, UI.WindowsAndMessaging.WINDOW_LONG_PTR_INDEX nIndex, IntPtr dwNewLong);
+
+    /// <summary>Retrieves the specified 32-bit (DWORD) value from the WNDCLASSEX structure associated with the specified window.</summary>
+    /// <param name="hWnd">
+    /// <para>Type: <b>HWND</b> A handle to the window and, indirectly, the class to which the window belongs.</para>
+    /// <para><see href="https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getclasslongw#parameters">Read more on docs.microsoft.com</see>.</para>
+    /// </param>
+    /// <param name="nIndex">Type: <b>int</b></param>
+    /// <returns>
+    /// <para>Type: <b>DWORD</b> If the function succeeds, the return value is the requested value. If the function fails, the return value is zero. To get extended error information, call <a href="/windows/desktop/api/errhandlingapi/nf-errhandlingapi-getlasterror">GetLastError</a>.</para>
+    /// </returns>
+    /// <remarks>
+    /// <para><see href="https://docs.microsoft.com/windows/win32/api//winuser/nf-winuser-getclasslongw">Learn more about this API from docs.microsoft.com</see>.</para>
+    /// </remarks>
+    [DllImport("USER32.dll", ExactSpelling = true, EntryPoint = "GetClassLongPtrW", SetLastError = true)]
+    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+    [SupportedOSPlatform("windows5.0")]
+    public static extern nint GetClassLongPtr(HWND hWnd, UI.WindowsAndMessaging.GET_CLASS_LONG_INDEX nIndex);
 }
