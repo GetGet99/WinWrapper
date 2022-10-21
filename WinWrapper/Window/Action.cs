@@ -43,5 +43,15 @@ partial struct Window
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Hide() => IsVisible = true;
 
+    /// <summary>
+    /// Minimizes the <see cref="Window"/>
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Minimize() => PInvoke.ShowWindow(Handle, SHOW_WINDOW_CMD.SW_MINIMIZE);
 
+    /// <summary>
+    /// Minimizes the <see cref="Window"/>
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Restore() => PInvoke.ShowWindow(Handle, SHOW_WINDOW_CMD.SW_RESTORE);
 }
