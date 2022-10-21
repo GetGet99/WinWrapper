@@ -88,6 +88,28 @@ partial struct Window
         set => Bounds = Bounds with { Location = value };
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    public IntPtr SmallIconPtr
+    {
+        get
+        {
+            var handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_SMALL, 0);
+            if (handle == 0) handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_SMALL2, 0);
+            if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICONSM);
+
+            return handle;
+        }
+    }
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    public IntPtr LargeIconPtr
+    {
+        get
+        {
+            var handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_BIG, 0);
+            if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICON);
+            return handle;
+        }
+    }
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public Bitmap? SmallIcon
     {
         get

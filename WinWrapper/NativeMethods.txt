@@ -54,6 +54,8 @@ GetWindowTextLength
 GetWindowText
 GetWindowPlacement
 
+FlashWindow
+
 SetParent
 GetAncestor
 
@@ -83,3 +85,8 @@ GetCursorPos
 
 LoadImage
 WM_SETICON
+
+SetWindowsHookEx
+CallNextHookEx
+HSHELL_REDRAW
+GetCurrentThreadId

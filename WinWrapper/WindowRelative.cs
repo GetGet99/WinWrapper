@@ -4,7 +4,7 @@ using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace WinWrapper;
 
-struct WindowRelative
+public struct WindowRelative
 {
     /// <summary>
     /// Get the <see cref="Window"/> reference
