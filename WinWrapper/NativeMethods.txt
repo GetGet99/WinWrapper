@@ -33,6 +33,14 @@ CreateWindowEx
 IsWindow
 DefWindowProc
 
+GetClassName
+GetWindowInfo
+GetClassInfoEx
+
+ICON_SMALL2
+ICON_SMALL
+ICON_BIG
+
 GetWindowLong
 SetWindowLong
 GetWindowRect

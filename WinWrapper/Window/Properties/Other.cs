@@ -88,15 +88,17 @@ partial struct Window
         set => Bounds = Bounds with { Location = value };
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    public Icon? SmallIcon
+    public Bitmap? SmallIcon
     {
         get
         {
             try
             {
-                var handle = (nint)PInvoke.DefWindowProc(Handle, PInvoke.WM_GETICON, 2, 0);
+                var handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_SMALL, 0);
+                if (handle == 0) handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_SMALL2, 0);
                 if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICONSM);
-                return Icon.FromHandle(handle);
+                
+                return Bitmap.FromHicon(handle);
             }
             catch
             {
@@ -105,15 +107,15 @@ partial struct Window
         }
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    public Icon? LargeIcon
+    public Bitmap? LargeIcon
     {
         get
         {
             try
             {
-                var handle = (nint)PInvoke.DefWindowProc(Handle, PInvoke.WM_GETICON, 1, 0);
-                if (handle == 0) handle = (nint)PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICON);
-                return Icon.FromHandle(handle);
+                var handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_BIG, 0);
+                if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICON);
+                return Bitmap.FromHicon(handle);
             }
             catch
             {
@@ -126,5 +128,29 @@ partial struct Window
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => Display.FromWindow(this);
+    }
+
+    public WINDOWINFO Information
+    {
+        get
+        {
+            WINDOWINFO Info = new();
+            PInvoke.GetWindowInfo(Handle, ref Info);
+            return Info;
+        }
+    }
+    /// <summary>
+    /// Get The Class Name up to 256 characters
+    /// </summary>
+    public unsafe string ClassName
+    {
+        get
+        {
+            char* chars = stackalloc char[256];
+            var str = new PWSTR(chars);
+            _ = PInvoke.GetClassName(Handle, chars, 256);
+            
+            return new string(str);
+        }
     }
 }

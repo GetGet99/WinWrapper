@@ -27,7 +27,7 @@ public partial struct Window
     /// </summary>
     public override string ToString()
     {
-        return IsValid ? $"Window {Handle.Value} ({TitleText})" : $"Invalid Window ({Handle.Value})";
+        return IsValid ? $"Window {Handle.Value} {TitleText} ({ClassName})" : $"Invalid Window ({Handle.Value})";
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
