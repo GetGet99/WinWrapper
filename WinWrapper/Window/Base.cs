@@ -40,5 +40,10 @@ public partial struct Window
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator !=(Window left, Window right)
-        => right.Handle.Value == left.Handle.Value;
+        => right.Handle.Value != left.Handle.Value;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static implicit operator IntPtr(Window win) => win.Handle.Value;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static implicit operator HWND(Window win) => win.Handle;
 }

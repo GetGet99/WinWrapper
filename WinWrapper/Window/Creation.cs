@@ -13,11 +13,22 @@ partial struct Window : IEquatable<Window>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Window FromLocation(Point pt)
         => new(PInvoke.WindowFromPoint(pt));
-
-    public static Window InFocus
+    /// <summary>
+    /// Gets Acitve <see cref="Window"/> of the current Thread
+    /// </summary>
+    public static Window ActiveWindow
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => new(PInvoke.GetActiveWindow());
+    }
+
+    /// <summary>
+    /// Gets Foreground <see cref="Window"/>
+    /// </summary>
+    public static Window ForegroundWindow
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => new(PInvoke.GetForegroundWindow());
     }
 
     public static Window CreateNewWindow(string Title, Rectangle Bounds = default)

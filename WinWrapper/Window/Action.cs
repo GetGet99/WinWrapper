@@ -1,7 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
+using Windows.Win32.UI.Shell;
+using System;
+
 namespace WinWrapper;
 
 partial struct Window
@@ -32,6 +36,13 @@ partial struct Window
         => PInvoke.SetActiveWindow(Handle);
 
     /// <summary>
+    /// Redraw the <see cref="Window"/>
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Redraw()
+        => PInvoke.RedrawWindow(Handle, null, null, Windows.Win32.Graphics.Gdi.REDRAW_WINDOW_FLAGS.RDW_INVALIDATE);
+
+    /// <summary>
     /// Shows the <see cref="Window"/>
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -54,4 +65,28 @@ partial struct Window
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Restore() => PInvoke.ShowWindow(Handle, SHOW_WINDOW_CMD.SW_RESTORE);
+
+    public delegate LRESULT WndProcOverride(HWND Handle, uint code, WPARAM wParam, LPARAM lParam, WNDPROC Original);
+
+    ///// <summary>
+    ///// Minimizes the <see cref="Window"/>
+    ///// </summary>
+    //public void OverrideWndProc(WndProcOverride NewWndProc)
+    //{
+    //    WNDPROC? Original = default;
+    //    try
+    //    {
+    //        GC.KeepAlive(NewWndProc);
+    //        LRESULT newwndproc(HWND Handle, uint code, WPARAM wParam, LPARAM lParam) => NewWndProc.Invoke(Handle, code, wParam, lParam, Original!);
+    //        WNDPROC newwndproce = newwndproc;
+    //        GC.KeepAlive(newwndproce);
+    //        var ptr = PInvoke.SetWindowLongPtr(Handle, WINDOW_LONG_PTR_INDEX.GWLP_WNDPROC, Marshal.GetFunctionPointerForDelegate(newwndproce));
+    //        Original = Marshal.GetDelegateForFunctionPointer<WNDPROC>((nint)ptr);
+    //        GC.KeepAlive(Original);
+    //    } catch
+    //    {
+    //    }
+    //}
+    //public void SetSubclass(SUBCLASSPROC s, uint Id)
+    //    => PInvoke.SetWindowSubclass(Handle, s, Id, UIntPtr.Zero);
 }

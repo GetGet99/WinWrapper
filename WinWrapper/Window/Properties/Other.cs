@@ -52,23 +52,27 @@ partial struct Window
     }
     public Rectangle Bounds
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
         {
             PInvoke.GetWindowRect(Handle, out var rect);
-            return new Rectangle
-            {
-                X = rect.left,
-                Y = rect.top,
-                Width = rect.right - rect.left,
-                Height = rect.bottom - rect.top
-            };
+            return rect;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
             PInvoke.SetWindowPos(Handle, HWND.Null, value.X, value.Y, value.Width, value.Height,
-                SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
+                SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING);
+        }
+    }
+    public Rectangle ClientBounds
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get
+        {
+            PInvoke.GetClientRect(Handle, out var rect);
+            return rect;
         }
     }
     public Size Size
