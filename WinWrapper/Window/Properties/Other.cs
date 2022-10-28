@@ -45,7 +45,7 @@ partial struct Window
     public bool IsVisible
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => Placement.showCmd is SHOW_WINDOW_CMD.SW_SHOWNORMAL;
+        get => Placement.showCmd is not SHOW_WINDOW_CMD.SW_MINIMIZE or SHOW_WINDOW_CMD.SW_HIDE;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set => PInvoke.ShowWindow(Handle, value ? SHOW_WINDOW_CMD.SW_SHOW : SHOW_WINDOW_CMD.SW_HIDE);
