@@ -46,13 +46,25 @@ partial struct Window
     /// Shows the <see cref="Window"/>
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void SetVisibility(bool Visibility) => IsVisible = Visibility;
+
+    /// <summary>
+    /// Shows the <see cref="Window"/>
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public async Task SetVisibilityAsync(bool Visibility) => await Task.Run(Visibility ? Show : Hide);
+
+    /// <summary>
+    /// Shows the <see cref="Window"/>
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Show() => IsVisible = true;
 
     /// <summary>
     /// Hides the <see cref="Window"/>
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Hide() => IsVisible = true;
+    public void Hide() => IsVisible = false;
 
     /// <summary>
     /// Minimizes the <see cref="Window"/>
