@@ -1,10 +1,14 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Windows.Win32;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.Storage.Xps;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Windows.Win32.UI.Shell;
 using System;
+using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace WinWrapper;
 
@@ -79,6 +83,24 @@ partial struct Window
     public void Restore() => PInvoke.ShowWindow(Handle, SHOW_WINDOW_CMD.SW_RESTORE);
 
     public delegate LRESULT WndProcOverride(HWND Handle, uint code, WPARAM wParam, LPARAM lParam, WNDPROC Original);
+
+
+    public Bitmap PrintWindow()
+    {
+        // Refernce: https://stackoverflow.com/questions/891345/get-a-screenshot-of-a-specific-application
+        var rc = Bounds;
+
+        Bitmap bmp = new(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
+        Graphics gfxBmp = Graphics.FromImage(bmp);
+        IntPtr hdcBitmap = gfxBmp.GetHdc();
+
+        PInvoke.PrintWindow(Handle, new HDC(hdcBitmap), 0);
+
+        gfxBmp.ReleaseHdc(hdcBitmap);
+        gfxBmp.Dispose();
+
+        return bmp;
+    }
 
     ///// <summary>
     ///// Minimizes the <see cref="Window"/>

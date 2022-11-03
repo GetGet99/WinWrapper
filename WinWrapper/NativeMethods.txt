@@ -104,3 +104,5 @@ RegisterWindowMessage
 SetWindowSubclass
 DefSubclassProc
 RemoveWindowSubclass
+
+PrintWindow
