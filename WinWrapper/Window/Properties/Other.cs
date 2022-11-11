@@ -66,6 +66,20 @@ partial struct Window
                 SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING);
         }
     }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void ActivateSetWindowPos()
+    {
+        PInvoke.SetWindowPos(Handle, HWND.Null, 0, 0, 0, 0,
+                SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void ActivateTopMost()
+    {
+        PInvoke.SetWindowPos(Handle, new((nint)(-1)), 0, 0, 0, 0,
+                SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+        PInvoke.SetWindowPos(Handle, new((nint)(-2)), 0, 0, 0, 0,
+                SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+    }
     public Task SetBoundsAsync(Rectangle NewBounds)
     {
         var self = this;
@@ -131,7 +145,7 @@ partial struct Window
                 var handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_SMALL, 0);
                 if (handle == 0) handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_SMALL2, 0);
                 if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICONSM);
-                
+
                 return Bitmap.FromHicon(handle);
             }
             catch
@@ -183,7 +197,7 @@ partial struct Window
             char* chars = stackalloc char[256];
             var str = new PWSTR(chars);
             _ = PInvoke.GetClassName(Handle, chars, 256);
-            
+
             return new string(str);
         }
     }
