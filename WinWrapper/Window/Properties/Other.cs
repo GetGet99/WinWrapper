@@ -66,6 +66,14 @@ partial struct Window
                 SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING);
         }
     }
+    public Task SetBoundsAsync(Rectangle NewBounds)
+    {
+        var self = this;
+        return Task.Run(delegate
+        {
+            self.Bounds = NewBounds;
+        });
+    }
     public Rectangle ClientBounds
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
