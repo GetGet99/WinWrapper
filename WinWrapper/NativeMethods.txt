@@ -109,3 +109,10 @@ PrintWindow
 
 PropVariantClear
 SHGetPropertyStoreForWindow
+SetWindowRgn
+CreateRectRgn
+GetWindowRgn
+GetRgnBox
+
+DwmGetWindowAttribute
+DwmSetWindowAttribute

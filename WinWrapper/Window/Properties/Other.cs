@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.UI.WindowsAndMessaging;
 namespace WinWrapper;
@@ -200,5 +201,42 @@ partial struct Window
 
             return new string(str);
         }
+    }
+
+    public Rectangle? Region
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get
+        {
+            using var region = PInvoke.CreateRectRgn_SafeHandle(0, 0, 0, 0);
+            if (PInvoke.GetWindowRgn(Handle, region) is GDI_REGION_TYPE.NULLREGION or GDI_REGION_TYPE.RGN_ERROR) return null;
+            PInvoke.GetRgnBox(region, out var rect);
+            return rect;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        set
+        {
+            if (value.HasValue)
+            {
+                var rect = value.Value;
+                using var region = PInvoke.CreateRectRgn_SafeHandle(rect.Left, rect.Top, rect.Right, rect.Bottom);
+                PInvoke.SetWindowRgn(Handle, region, true);
+            } else
+            {
+                PInvoke.SetWindowRgn(Handle, null, true);
+            }
+        }
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public unsafe T DwmGetWindowAttribute<T>(DWMWINDOWATTRIBUTE dwAttribute) where T : unmanaged
+    {
+        T ToReturn = new();
+        PInvoke.DwmGetWindowAttribute(Handle, dwAttribute, &ToReturn, (uint)sizeof(T));
+        return ToReturn;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public unsafe void DwmSetWindowAttribute<T>(DWMWINDOWATTRIBUTE dwAttribute, T value) where T : unmanaged
+    {
+        PInvoke.DwmSetWindowAttribute(Handle, dwAttribute, &value, (uint)sizeof(T));
     }
 }

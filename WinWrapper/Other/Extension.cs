@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Windows.Win32.Foundation;
 
@@ -15,6 +16,7 @@ static class Extension
     public static void ThrowOnFailure(this BOOL Boolean)
     {
         if (Boolean) return;
-        throw new COMException("An Error has occured");
+        if (Debugger.IsAttached) Debugger.Break();
+        throw new COMException($"An Error has occured: {Marshal.GetLastWin32Error()}");
     }
 }

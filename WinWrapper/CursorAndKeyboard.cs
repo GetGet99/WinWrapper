@@ -47,6 +47,11 @@ public static class Keyboard
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetAsyncKeyDown(VIRTUAL_KEY.VK_SHIFT);
     }
+    public static bool IsAltDown
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => GetAsyncKeyDown(VIRTUAL_KEY.VK_MENU);
+    }
 
     public static bool IsControlDown
     {
