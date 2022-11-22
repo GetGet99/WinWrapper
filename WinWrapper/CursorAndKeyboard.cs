@@ -35,6 +35,8 @@ public static class Cursor
             else return default;
         }
     }
+    public static bool ReleaseCapture()
+        => PInvoke.ReleaseCapture();
 }
 
 public static class Keyboard

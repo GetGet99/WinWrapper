@@ -112,7 +112,8 @@ partial struct Window
         get => Bounds.Location;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => Bounds = Bounds with { Location = value };
+        set => PInvoke.SetWindowPos(Handle, HWND.Null, value.X, value.Y, 0, 0,
+                SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOCOPYBITS);
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public IntPtr SmallIconPtr

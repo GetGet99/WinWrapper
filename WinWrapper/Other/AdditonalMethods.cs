@@ -48,6 +48,9 @@ partial class PInvoke
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     [SupportedOSPlatform("windows5.0")]
     public static extern nint GetClassLongPtr(HWND hWnd, UI.WindowsAndMessaging.GET_CLASS_LONG_INDEX nIndex);
+
+    public const int SC_MOUSEMOVE = 0xf012;
+    public const int SC_MOUSEMENU = 0xf090;
 }
 
 public enum DWM_SYSTEMBACKDROP_TYPE : uint

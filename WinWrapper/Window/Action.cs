@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Reflection.Metadata;
 using Windows.Win32.System.Com.StructuredStorage;
 using System.Runtime.Versioning;
+using Windows.UI.Composition;
 
 namespace WinWrapper;
 
@@ -121,6 +122,25 @@ partial struct Window
         uint result2 = prop.SetValue(ref AppUserModelIDKey, pv);
 
         Marshal.ReleaseComObject(prop);
+    }
+
+    /// <summary>
+    /// Apply Drag Move. Call this only if user's primary mouse cursor is down
+    /// </summary>
+    public void DragMove()
+    {
+        Cursor.ReleaseCapture();
+        PInvoke.SendMessage(Handle, PInvoke.WM_LBUTTONUP, default, default);
+        PInvoke.SendMessage(Handle, PInvoke.WM_SYSCOMMAND, new(PInvoke.SC_MOUSEMOVE), default);
+    }
+
+    /// <summary>
+    /// Apply Drag Move. Call this only if user's primary mouse cursor is down
+    /// </summary>
+    public void DragMoveRightClick()
+    {
+        PInvoke.SendMessage(Handle, PInvoke.WM_SYSCOMMAND, new(PInvoke.SC_MOUSEMENU), default);
+        //PInvoke.SendMessage(Handle, PInvoke.WM_RBUTTONUP, default, default);
     }
 
     ///// <summary>
