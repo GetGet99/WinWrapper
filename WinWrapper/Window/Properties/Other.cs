@@ -89,6 +89,14 @@ partial struct Window
             self.Bounds = NewBounds;
         });
     }
+    public Task SetRegionAsync(Rectangle NewRegion)
+    {
+        var self = this;
+        return Task.Run(delegate
+        {
+            self.Region = NewRegion;
+        });
+    }
     public Rectangle ClientBounds
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
