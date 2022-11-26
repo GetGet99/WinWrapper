@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using Windows.ApplicationModel.Preview.InkWorkspace;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
@@ -247,5 +248,9 @@ partial struct Window
     public unsafe void DwmSetWindowAttribute<T>(DWMWINDOWATTRIBUTE dwAttribute, T value) where T : unmanaged
     {
         PInvoke.DwmSetWindowAttribute(Handle, dwAttribute, &value, (uint)sizeof(T));
+    }
+    public Process OwnerProcess
+    {
+        get => Process.FromHandle(PInvoke.GetProcessHandleFromHwnd(Handle));
     }
 }

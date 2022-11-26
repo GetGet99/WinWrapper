@@ -51,6 +51,9 @@ partial class PInvoke
 
     public const int SC_MOUSEMOVE = 0xf012;
     public const int SC_MOUSEMENU = 0xf090;
+
+    [DllImport("Oleacc.dll", ExactSpelling = true)]
+    public static extern HANDLE GetProcessHandleFromHwnd(HWND hwnd);
 }
 
 public enum DWM_SYSTEMBACKDROP_TYPE : uint
