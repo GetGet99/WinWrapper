@@ -51,6 +51,7 @@ partial struct Window : IEquatable<Window>
                     {
                         return PInvoke.DefWindowProc(hwnd, msg, wParam, lParam);
                     }
+                    
                 };
                 PInvoke.RegisterClass(cls);
                 return new(PInvoke.CreateWindowEx(
@@ -63,8 +64,8 @@ partial struct Window : IEquatable<Window>
                     Bounds.Width,
                     Bounds.Height,
                     HWND.Null,
-                    null,
-                    null,
+                    PInvoke.CreateMenu_SafeHandle(),
+                    null,//PInvoke.GetModuleHandle(default(string)),
                     (void*)IntPtr.Zero
                 ));
             }
