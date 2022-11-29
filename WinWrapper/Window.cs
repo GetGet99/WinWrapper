@@ -3,7 +3,7 @@ using Windows.Win32;
 using Windows.Win32.Foundation;
 namespace WinWrapper;
 
-public partial struct Window
+public readonly partial struct Window
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private Window(HWND Handle)
