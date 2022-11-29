@@ -31,47 +31,30 @@ partial struct Window : IEquatable<Window>
         get => new(PInvoke.GetForegroundWindow());
     }
 
-    public static Window CreateNewWindow(string Title, Rectangle Bounds = default)
+    public unsafe static Window CreateNewWindow(string Title, WindowClass windowClass, Rectangle Bounds = default)
     {
         if (Bounds == default)
         {
             const int d = PInvoke.CW_USEDEFAULT;
             Bounds = new Rectangle(d, d, d, d);
         }
-        var hInstance = PInvoke.GetCurrentProcess();
-        unsafe
-        {
-            fixed (char* className = "ME")
-            {
-                WNDCLASSW cls = new()
-                {
-                    lpszClassName = className,
-                    hInstance = new HINSTANCE(hInstance.Value),
-                    lpfnWndProc = (hwnd, msg, wParam, lParam) =>
-                    {
-                        return PInvoke.DefWindowProc(hwnd, msg, wParam, lParam);
-                    }
-                    
-                };
-                PInvoke.RegisterClass(cls);
-                return new(PInvoke.CreateWindowEx(
-                    WINDOW_EX_STYLE.WS_EX_OVERLAPPEDWINDOW,
-                    "ME",
-                    Title,
-                    WINDOW_STYLE.WS_OVERLAPPEDWINDOW,
-                    Bounds.X,
-                    Bounds.Y,
-                    Bounds.Width,
-                    Bounds.Height,
-                    HWND.Null,
-                    PInvoke.CreateMenu_SafeHandle(),
-                    null,//PInvoke.GetModuleHandle(default(string)),
-                    (void*)IntPtr.Zero
-                ));
-            }
-        }
+
+        return new(PInvoke.CreateWindowEx(
+            WINDOW_EX_STYLE.WS_EX_OVERLAPPEDWINDOW,
+            windowClass.ClassName,
+            Title,
+            WINDOW_STYLE.WS_OVERLAPPEDWINDOW,
+            Bounds.X,
+            Bounds.Y,
+            Bounds.Width,
+            Bounds.Height,
+            HWND.Null,
+            PInvoke.CreateMenu_SafeHandle(),
+            null,//PInvoke.GetModuleHandle(default(string)),
+            (void*)IntPtr.Zero
+        ));
     }
-    
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static List<Window> GetAllWindows()
         => GetWindowAPI.EnumWindows();
