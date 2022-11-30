@@ -6,6 +6,7 @@ using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Win32.Foundation;
+using Windows.Win32.UI.Shell;
 
 namespace Windows.Win32;
 #pragma warning disable CA1401
@@ -63,4 +64,16 @@ public enum DWM_SYSTEMBACKDROP_TYPE : uint
     DWMSBT_MAINWINDOW = 2,
     DWMSBT_TRANSIENTWINDOW = 3,
     DWMSBT_TABBEDWINDOW = 4
+}
+[ComImport()]
+[Guid("56fdf344-fd6d-11d0-958a-006097c9a090")]
+[ClassInterface(ClassInterfaceType.None)]
+public class TaskbarInstance
+{
+    
+}
+public static class Taskbars
+{
+    public static TaskbarInstance TaskbarInstance = Activator.CreateInstance<TaskbarInstance>();
+    public static ITaskbarList3 ITaskbarList3 = (ITaskbarList3)TaskbarInstance;
 }

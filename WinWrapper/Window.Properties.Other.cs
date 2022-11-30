@@ -24,10 +24,13 @@ partial struct Window
                 fixed (char* charptr = chars)
                 {
                     PInvoke.GetWindowText(Handle, new PWSTR(charptr), TitleTextLength + 1);
+                    
                 }
                 return new string(chars[..^1]);
             }
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        set => PInvoke.SetWindowText(Handle, value);
     }
 
     public WINDOWPLACEMENT Placement
@@ -252,5 +255,12 @@ partial struct Window
     public Process OwnerProcess
     {
         get => Process.FromHandle(PInvoke.GetProcessHandleFromHwnd(Handle));
+    }
+    public unsafe void SetOverlayIconPtr(HICON Icon, string AlternateText)
+    {
+        fixed (char* alternateText = AlternateText)
+        {
+            Taskbars.ITaskbarList3.SetOverlayIcon(Handle, Icon, alternateText);
+        }
     }
 }

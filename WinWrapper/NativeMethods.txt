@@ -53,6 +53,7 @@ ShowWindow
 
 GetWindowTextLength
 GetWindowText
+SetWindowText
 GetWindowPlacement
 
 FlashWindow
@@ -132,3 +133,10 @@ GetProcessId
 
 GetModuleHandle
 CreateMenu
+
+WM_ACTIVATE
+
+DwmRegisterThumbnail
+SetOverlayIcon
+
+ITaskbarList3
