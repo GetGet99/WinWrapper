@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Windows.ApplicationModel.Preview.InkWorkspace;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -261,6 +262,40 @@ partial struct Window
         fixed (char* alternateText = AlternateText)
         {
             Taskbars.ITaskbarList3.SetOverlayIcon(Handle, Icon, alternateText);
+        }
+    }
+    public unsafe void SetLayeredWindowBitmap(HBITMAP Bitmap, byte Opacity = 255)
+    {
+        var ScreenHDC = PInvoke.GetDC(default);
+        var MemHDC = PInvoke.CreateCompatibleDC(ScreenHDC);
+        HBITMAP OldBitmap = default;
+
+        try
+        {
+            OldBitmap = new(PInvoke.SelectObject(new HDC(MemHDC.Value), new HGDIOBJ(Bitmap.Value)).Value);
+            BLENDFUNCTION blend = new()
+            {
+                BlendOp = (byte)PInvoke.AC_SRC_OVER,
+                BlendFlags = 0,
+                SourceConstantAlpha = Opacity,
+                AlphaFormat = (byte)PInvoke.AC_SRC_ALPHA
+            };
+            PInvoke.UpdateLayeredWindow(
+                hWnd: Handle,
+                hdcDst: ScreenHDC,
+                pptDst: null,
+                psize: null,
+                hdcSrc: new HDC(MemHDC.Value),
+                pptSrc: null,
+                crKey: new COLORREF(0),
+                pblend: &blend,
+                dwFlags: UPDATE_LAYERED_WINDOW_FLAGS.ULW_ALPHA
+            );
+        } finally
+        {
+            PInvoke.ReleaseDC(default, ScreenHDC);
+            if (!Bitmap.IsNull)
+                PInvoke.SelectObject(new HDC(MemHDC.Value), new HGDIOBJ(OldBitmap.Value));
         }
     }
 }

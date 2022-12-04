@@ -140,3 +140,18 @@ DwmRegisterThumbnail
 SetOverlayIcon
 
 ITaskbarList3
+GetMessage
+
+TranslateMessage
+DispatchMessage
+UpdateLayeredWindow
+GetDC
+ReleaseDC
+GetIconInfo
+
+GdipCreateBitmapFromHICON
+CreateCompatibleDC
+SelectObject
+AC_SRC_OVER
+AC_SRC_ALPHA
+GetStockObject
