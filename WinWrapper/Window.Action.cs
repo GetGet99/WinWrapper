@@ -1,18 +1,12 @@
-﻿using System.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Graphics.Gdi;
-using Windows.Win32.Storage.Xps;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
-using Windows.Win32.UI.Shell;
-using System;
 using System.Drawing.Imaging;
 using System.Drawing;
-using System.Reflection.Metadata;
-using Windows.Win32.System.Com.StructuredStorage;
 using System.Runtime.Versioning;
-using Windows.UI.Composition;
 
 namespace WinWrapper;
 
