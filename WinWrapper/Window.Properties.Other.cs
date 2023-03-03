@@ -94,7 +94,7 @@ partial struct Window
             self.Bounds = NewBounds;
         });
     }
-    public Task SetRegionAsync(Rectangle NewRegion)
+    public Task SetRegionAsync(Rectangle? NewRegion)
     {
         var self = this;
         return Task.Run(delegate
@@ -237,11 +237,11 @@ partial struct Window
                 PInvoke.SetWindowRgn(Handle, region, true);
             } else
             {
-                PInvoke.SetWindowRgn(Handle, null, true);
-            }
+				PInvoke.SetWindowRgn(Handle, null, true);
+			}
         }
     }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
     public unsafe T DwmGetWindowAttribute<T>(DWMWINDOWATTRIBUTE dwAttribute) where T : unmanaged
     {
         T ToReturn = new();
