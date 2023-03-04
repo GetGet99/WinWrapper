@@ -12,14 +12,9 @@ partial struct Window
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => (Style & WINDOW_STYLE.WS_SIZEBOX) != 0;
 
-        set
-        {
-            if (value)
-                Style |= WINDOW_STYLE.WS_SIZEBOX;
-            else
-                Style &= ~WINDOW_STYLE.WS_SIZEBOX;
-        }
-    }
+		set => SetStyleFlag(WINDOW_STYLE.WS_SIZEBOX, value);
+
+	}
     //public bool IsVisibleStyle
     //{
     //    get => (Style & WINDOW_STYLE.WS_VISIBLE) != 0;
@@ -40,12 +35,6 @@ partial struct Window
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => (Style & WINDOW_STYLE.WS_CAPTION) != 0;
 
-        set
-        {
-            if (value)
-                Style |= WINDOW_STYLE.WS_CAPTION;
-            else
-                Style &= ~WINDOW_STYLE.WS_CAPTION;
-        }
+        set => SetStyleFlag(WINDOW_STYLE.WS_CAPTION, value);
     }
 }
