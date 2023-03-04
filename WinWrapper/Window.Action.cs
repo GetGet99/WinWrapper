@@ -86,6 +86,12 @@ partial struct Window
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Restore() => PInvoke.ShowWindow(Handle, SHOW_WINDOW_CMD.SW_RESTORE);
 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void SendMessage(uint Message, WPARAM wPARAM, LPARAM lPARAM)
+        => PInvoke.SendMessage(Handle, Message, wPARAM, lPARAM);
+
+
     public delegate LRESULT WndProcOverride(HWND Handle, uint code, WPARAM wParam, LPARAM lParam, WNDPROC Original);
 
 

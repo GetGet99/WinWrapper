@@ -8,6 +8,8 @@ using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.UI.WindowsAndMessaging;
+using WinWrapper.Control;
+
 namespace WinWrapper;
 
 partial struct Window
@@ -33,6 +35,8 @@ partial struct Window
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set => PInvoke.SetWindowText(Handle, value);
     }
+
+    public WindowController Controller => new(this);
 
     public WINDOWPLACEMENT Placement
     {
@@ -139,6 +143,10 @@ partial struct Window
 
             return handle;
         }
+        set
+        {
+            PInvoke.SendMessage(Handle, PInvoke.WM_SETICON, PInvoke.ICON_SMALL, value);
+        }
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public IntPtr LargeIconPtr
@@ -148,6 +156,10 @@ partial struct Window
             var handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_BIG, 0);
             if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICON);
             return handle;
+        }
+        set
+        {
+            PInvoke.SendMessage(Handle, PInvoke.WM_SETICON, PInvoke.ICON_BIG, value);
         }
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
