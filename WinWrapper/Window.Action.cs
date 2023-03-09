@@ -38,6 +38,13 @@ partial struct Window
         => PInvoke.SetActiveWindow(Handle);
 
     /// <summary>
+    /// Set the <see cref="Window"/> as Foreground Window
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void SetAsForegroundWindow()
+        => PInvoke.SetForegroundWindow(Handle);
+
+    /// <summary>
     /// Redraw the <see cref="Window"/>
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
