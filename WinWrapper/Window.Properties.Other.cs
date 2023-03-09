@@ -267,12 +267,16 @@ partial struct Window
     {
         get => Process.FromHandle(PInvoke.GetProcessHandleFromHwnd(Handle));
     }
-    public unsafe void SetOverlayIconPtr(HICON Icon, string AlternateText)
+    public unsafe bool SetOverlayIconPtr(HICON Icon, string AlternateText)
     {
-        fixed (char* alternateText = AlternateText)
-        {
-            Taskbars.ITaskbarList3.SetOverlayIcon(Handle, Icon, alternateText);
-        }
+		try {
+			fixed (char* alternateText = AlternateText) {
+				Taskbars.ITaskbarList3.SetOverlayIcon(Handle, Icon, alternateText);
+			}
+		} catch (Exception) {
+			return false;
+		}//sometimes this api call may timeout and throw
+		return true;
     }
     public unsafe void SetLayeredWindowBitmap(HBITMAP Bitmap, byte Opacity = 255)
     {
