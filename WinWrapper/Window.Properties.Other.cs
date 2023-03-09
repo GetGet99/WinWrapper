@@ -50,7 +50,15 @@ partial struct Window
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => Placement.showCmd is SHOW_WINDOW_CMD.SW_MAXIMIZE;
     }
-    public bool IsVisible
+	public bool IsMinimized {
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get => Placement.showCmd is SHOW_WINDOW_CMD.SW_MINIMIZE;
+	}
+	public bool IsNormalSize {
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get => Placement.showCmd is SHOW_WINDOW_CMD.SW_NORMAL;
+	}
+	public bool IsVisible
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => Style.HasFlag(WINDOW_STYLE.WS_VISIBLE);
@@ -170,8 +178,9 @@ partial struct Window
                 var handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_SMALL, 0);
                 if (handle == 0) handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_SMALL2, 0);
                 if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICONSM);
-
-                return Bitmap.FromHicon(handle);
+				if (handle == 0)
+					return null;
+				return Bitmap.FromHicon(handle);
             }
             catch
             {
@@ -188,7 +197,9 @@ partial struct Window
             {
                 var handle = (nint)PInvoke.SendMessage(Handle, PInvoke.WM_GETICON, PInvoke.ICON_BIG, 0);
                 if (handle == 0) handle = PInvoke.GetClassLongPtr(Handle, GET_CLASS_LONG_INDEX.GCLP_HICON);
-                return Bitmap.FromHicon(handle);
+				if (handle == 0)
+					return null;
+				return Bitmap.FromHicon(handle);
             }
             catch
             {
