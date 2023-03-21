@@ -42,7 +42,11 @@ public partial struct Display
     {
         get
         {
-            MONITORINFO m = new() { dwFlags = (uint)MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST };
+            MONITORINFO m;
+            unsafe
+            {
+                m = new() { cbSize = (uint)sizeof(MONITORINFO), dwFlags = (uint)MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST };
+            }
             PInvoke.GetMonitorInfo(Handle, ref m).ThrowOnFailure();
             return m;
         }

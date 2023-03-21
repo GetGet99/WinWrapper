@@ -7,6 +7,7 @@ using Windows.Win32.UI.WindowsAndMessaging;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Runtime.Versioning;
+using System.Reflection.Metadata;
 
 namespace WinWrapper;
 
@@ -148,6 +149,16 @@ partial struct Window
     {
         PInvoke.SendMessage(Handle, PInvoke.WM_SYSCOMMAND, new(PInvoke.SC_MOUSEMENU), default);
         //PInvoke.SendMessage(Handle, PInvoke.WM_RBUTTONUP, default, default);
+    }
+
+    public BOOL SetWindowPlacement(WINDOWPLACEMENT placement)
+    {
+        return PInvoke.SetWindowPlacement(Handle, in placement);
+    }
+    
+    public void Maximize()
+    {
+        PInvoke.ShowWindow(Handle, SHOW_WINDOW_CMD.SW_MAXIMIZE);
     }
 
     ///// <summary>
@@ -299,5 +310,6 @@ partial struct Window
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         [SupportedOSPlatform("windows5.0")]
         private extern static void PropVariantClear([In, Out] PropVariant pvar);
+
     }
 }

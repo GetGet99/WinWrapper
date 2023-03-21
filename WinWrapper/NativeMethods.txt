@@ -176,3 +176,9 @@ WM_KEYUP
 WM_CHAR
 
 SetForegroundWindow
+
+SetWindowPlacement
+
+HWND_TOPMOST
+
+ChildWindowFromPointEx

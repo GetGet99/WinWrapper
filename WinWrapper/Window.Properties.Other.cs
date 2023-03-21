@@ -96,6 +96,11 @@ partial struct Window
         PInvoke.SetWindowPos(Handle, new((nint)(-2)), 0, 0, 0, 0,
                 SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
     }
+    public void SetTopMost()
+    {
+        PInvoke.SetWindowPos(Handle, new((nint)(-1)), 0, 0, 0, 0,
+                SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+    }
     public Task SetBoundsAsync(Rectangle NewBounds)
     {
         var self = this;
@@ -321,6 +326,16 @@ partial struct Window
             PInvoke.ReleaseDC(default, ScreenHDC);
             if (!Bitmap.IsNull)
                 PInvoke.SelectObject(new HDC(MemHDC.Value), new HGDIOBJ(OldBitmap.Value));
+        }
+    }
+    public uint ThreadProcessId
+    {
+        get
+        {
+            unsafe
+            {
+                return PInvoke.GetWindowThreadProcessId(Handle, (uint*)0);
+            }
         }
     }
 }
