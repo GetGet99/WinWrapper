@@ -17,7 +17,7 @@ static class GetMonitorAPI
     public unsafe static List<Display> EnumMonitors()
     {
         _WinStructList = new List<Display>();
-        PInvoke.EnumDisplayMonitors(null, null, Callback, 0);
+        PInvoke.EnumDisplayMonitors(default, default(RECT?), Callback, 0);
         return _WinStructList;
     }
 }
