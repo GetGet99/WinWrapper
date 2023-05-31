@@ -184,3 +184,5 @@ HWND_TOPMOST
 ChildWindowFromPointEx
 
 DeleteDC
+
+KBDLLHOOKSTRUCT
