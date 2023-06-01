@@ -9,10 +9,10 @@ partial struct Window
     /// <summary>
     /// Retrives all the children <see cref="Window"/>s
     /// </summary>
-    public Span<Window> Children
+    public IEnumerable<Window> Children
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => CollectionsMarshal.AsSpan(GetWindowAPI.EnumChildWindows(Handle));
+        get => GetWindowAPI.EnumChildWindows(Handle).AsEnumerable();
     }
 
     /// <summary>

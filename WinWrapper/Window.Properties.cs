@@ -14,4 +14,10 @@ partial struct Window
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int SetWindowLong(WINDOW_LONG_PTR_INDEX index, IntPtr setflag)
         => PInvoke.SetWindowLong(Handle, index, (int)setflag);
+
+    public WNDCLASS_STYLES ClassStyle
+    {
+        get => (WNDCLASS_STYLES)PInvoke.GetClassLong(Handle, GET_CLASS_LONG_INDEX.GCL_STYLE);
+        set => PInvoke.SetClassLong(Handle, GET_CLASS_LONG_INDEX.GCL_STYLE, (int)value);
+    }
 }

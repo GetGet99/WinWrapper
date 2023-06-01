@@ -211,3 +211,8 @@ HOVER_DEFAULT
 
 WM_MOUSEMOVE
 WM_MOUSEHOVER
+
+SetClassLong
+GetClassLong
+
+DwmExtendFrameIntoClientArea

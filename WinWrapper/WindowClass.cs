@@ -33,6 +33,5 @@ public readonly struct WindowClass
             PInvoke.RegisterClass(cls);
         }
     }
-
     public static WindowClass FromExistingClass(string ClassName) => new(ClassName, false);
 }
