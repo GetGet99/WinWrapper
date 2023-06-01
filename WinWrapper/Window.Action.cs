@@ -93,6 +93,10 @@ partial struct Window
     public void SendMessage(uint Message, WPARAM wPARAM, LPARAM lPARAM)
         => PInvoke.SendMessage(Handle, Message, wPARAM, lPARAM);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void SetLayeredWindowAttributes(COLORREF Color, byte bAlpha, LAYERED_WINDOW_ATTRIBUTES_FLAGS flags)
+        => PInvoke.SetLayeredWindowAttributes(this, Color, bAlpha, flags);
+
 
     public delegate LRESULT WndProcOverride(HWND Handle, uint code, WPARAM wParam, LPARAM lParam, WNDPROC Original);
 

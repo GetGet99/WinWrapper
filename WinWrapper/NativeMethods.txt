@@ -183,6 +183,11 @@ HWND_TOPMOST
 
 ChildWindowFromPointEx
 
+DeleteDC
+
+KBDLLHOOKSTRUCT
+ChildWindowFromPointEx
+
 FindWindow
 FindWindowEx
 SystemParametersInfo
