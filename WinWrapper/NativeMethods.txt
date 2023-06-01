@@ -182,3 +182,27 @@ SetWindowPlacement
 HWND_TOPMOST
 
 ChildWindowFromPointEx
+
+FindWindow
+FindWindowEx
+SystemParametersInfo
+
+ID_TRAY_SHOW_OVERFLOW
+
+ShellExecute
+OpenEvent
+SetEvent
+IsWindowVisible
+
+WM_ERASEBKGND
+FillRect
+CreateSolidBrush
+SetLayeredWindowAttributes
+
+DWM_WINDOW_CORNER_PREFERENCE
+
+TrackMouseEvent
+HOVER_DEFAULT
+
+WM_MOUSEMOVE
+WM_MOUSEHOVER

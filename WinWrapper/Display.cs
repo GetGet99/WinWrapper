@@ -4,6 +4,8 @@ using Windows.Win32;
 using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.UI.Shell.Common;
 using System.Runtime.Versioning;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 namespace WinWrapper;
 
 public partial struct Display
@@ -74,5 +76,26 @@ public partial struct Display
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => (MonitorInfo.dwFlags & PInvoke.MONITORINFOF_PRIMARY) != 0;
+    }
+
+    public unsafe void SetWorkingArea(int top, int left, int right, int bottom)
+    {
+        var bounds = MonitorBounds;
+
+        RECT workArea = new()
+        {
+            top = bounds.Top + top,
+            left = bounds.Left + left,
+            right = bounds.Right - right,
+            bottom = bounds.Bottom - bottom
+        };
+
+        //Probably will need rework when using more than 1 monitor
+        PInvoke.SystemParametersInfo(
+            SYSTEM_PARAMETERS_INFO_ACTION.SPI_SETWORKAREA,
+            0,
+            &workArea,
+            SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS.SPIF_UPDATEINIFILE
+        );
     }
 }

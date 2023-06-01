@@ -61,7 +61,7 @@ partial struct Window
 	public bool IsVisible
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => Style.HasFlag(WINDOW_STYLE.WS_VISIBLE);
+        get => PInvoke.IsWindowVisible(Handle); //Style.HasFlag(WINDOW_STYLE.WS_VISIBLE);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set => PInvoke.ShowWindow(Handle, value ? SHOW_WINDOW_CMD.SW_SHOW : SHOW_WINDOW_CMD.SW_HIDE);

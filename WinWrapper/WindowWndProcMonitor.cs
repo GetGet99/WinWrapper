@@ -33,7 +33,11 @@
 //    /// <summary>
 //    /// Disposes this instance
 //    /// </summary>
-//    public void Dispose() => Dispose(true);
+//    public void Dispose()
+//    {
+//        Dispose(true);
+//        GC.SuppressFinalize(this);
+//    }
 
 //    private void Dispose(bool disposing)
 //    {
@@ -41,7 +45,7 @@
 //            Unsubscribe();
 //    }
 
-//    public delegate LRESULT? WindowMessageCallback(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam);
+//    public delegate LRESULT? WindowMessageCallback(Window window, int uMsg, WPARAM wParam, LPARAM lParam);
 
 //    private event WindowMessageCallback? _NativeMessage;
 
@@ -68,16 +72,16 @@
 //        }
 //    }
 
-//    private LRESULT NewWindowProc(uint uMsg, WPARAM wParam, LPARAM lParam)
+//    private LRESULT NewWindowProc(int uMsg, WPARAM wParam, LPARAM lParam)
 //    {
 //        var handler = _NativeMessage;
 //        if (handler != null)
 //        {
-//            var result = handler.Invoke(hWnd, uMsg, wParam.Value, lParam);
+//            var result = handler.Invoke(Window, uMsg, wParam.Value, lParam);
 //            if (result.HasValue)
 //                return result.Value;
 //        }
-//        return Windows.Win32.PInvoke.CallNextHookEx(uMsg, wParam, lParam);
+//        return Windows.Win32.PInvoke.CallNextHookEx(, uMsg, wParam, lParam);
 //    }
 
 //    private void Subscribe()
@@ -86,7 +90,12 @@
 //            if (callback == null)
 //            {
 //                callback = new HOOKPROC(NewWindowProc);
-//                bool ok = Windows.Win32.PInvoke.SetWindowsHookEx(WINDOWS_HOOK_ID.WH_CALLWNDPROC, callback, Window, Window.);
+//                bool ok = Windows.Win32.PInvoke.SetWindowsHookEx(
+//                    WINDOWS_HOOK_ID.WH_CALLWNDPROC,
+//                    callback,
+//                    Window,
+//                    Window.
+//                );
 //            }
 //    }
 

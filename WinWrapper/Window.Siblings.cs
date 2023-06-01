@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.UI.WindowsAndMessaging;
 namespace WinWrapper;
@@ -8,10 +9,10 @@ partial struct Window
     /// <summary>
     /// Retrives all the children <see cref="Window"/>s
     /// </summary>
-    public List<Window> Children
+    public Span<Window> Children
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => GetWindowAPI.EnumChildWindows(Handle);
+        get => CollectionsMarshal.AsSpan(GetWindowAPI.EnumChildWindows(Handle));
     }
 
     /// <summary>
