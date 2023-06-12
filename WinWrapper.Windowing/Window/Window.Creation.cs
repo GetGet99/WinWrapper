@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
-namespace WinWrapper;
+namespace WinWrapper.Windowing;
 
 partial struct Window : IEquatable<Window>
 {
@@ -30,7 +30,12 @@ partial struct Window : IEquatable<Window>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => new(PInvoke.GetForegroundWindow());
     }
-
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Window Find(WindowClass Class, string? WindowName)
+        => new(PInvoke.FindWindow(Class.ClassName, WindowName));
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Window Find(Window Parent, Window ChildAfter, WindowClass Class, string? WindowName)
+        => new(PInvoke.FindWindowEx(Parent.HWND, ChildAfter.HWND, Class.ClassName, WindowName));
     public unsafe static Window CreateNewWindow(string Title, WindowClass windowClass, Rectangle Bounds = default)
     {
         if (Bounds == default)
@@ -59,17 +64,10 @@ partial struct Window : IEquatable<Window>
     public static List<Window> GetAllWindows()
         => GetWindowAPI.EnumWindows();
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static List<Window> GetWindowsInCurrentThread()
-        => GetWindowAPI.EnumCurrentThreadWindows();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static List<Window> GetWindowsInThread(uint ThreadId)
+    public static List<Window> GetWindowsInThread(Thread ThreadId)
         => GetWindowAPI.EnumThreadWindows(ThreadId);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static List<Window> GetSameThreadWindows(Window Window)
-        => GetWindowAPI.EnumSameThreadWindows(Window);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Window GetWindowFromPoint(Point pt)
@@ -80,7 +78,7 @@ partial struct Window : IEquatable<Window>
         => new((HWND)Handle);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Window FromWindowHandle(HWND Handle)
+    internal static Window FromWindowHandle(HWND Handle)
         => new(Handle);
 
 }

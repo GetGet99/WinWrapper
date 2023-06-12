@@ -8,10 +8,6 @@ namespace WinWrapper;
 partial struct Display
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Display FromWindow(Window Window)
-        => new(PInvoke.MonitorFromWindow(Window.Handle, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY));
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Display FromPoint(Point Location)
         => new(PInvoke.MonitorFromPoint(Location, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY));
 
@@ -20,8 +16,12 @@ partial struct Display
         => new(PInvoke.MonitorFromRect(Location, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Display FromHandle(HMONITOR Handle)
+    internal static Display FromHandle(HMONITOR Handle)
         => new(Handle);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Display FromHandle(nint Handle)
+        => new((HMONITOR)Handle);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static List<Display> GetAllMonitors()

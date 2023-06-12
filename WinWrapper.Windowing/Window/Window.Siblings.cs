@@ -2,17 +2,17 @@
 using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.UI.WindowsAndMessaging;
-namespace WinWrapper;
+namespace WinWrapper.Windowing;
 
 partial struct Window
 {
     /// <summary>
     /// Retrives all the children <see cref="Window"/>s
     /// </summary>
-    public IEnumerable<Window> Children
+    public List<Window> Children
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => GetWindowAPI.EnumChildWindows(Handle).AsEnumerable();
+        get => GetWindowAPI.EnumChildWindows(HWND);
     }
 
     /// <summary>
@@ -21,12 +21,9 @@ partial struct Window
     public Window Owner
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => new(PInvoke.GetWindow(Handle, GET_WINDOW_CMD.GW_OWNER));
+        get => new(PInvoke.GetWindow(HWND, GET_WINDOW_CMD.GW_OWNER));
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set
-        {
-            _ = PInvoke.SetWindowLongPtr(Handle, WINDOW_LONG_PTR_INDEX.GWL_HWNDPARENT, value.Handle.Value);
-        }
+        set => WindowLong[WindowLongPtrIndex.GWL_HWNDPARENT] = value.HWND;
     }
 
     /// <summary>
@@ -35,9 +32,9 @@ partial struct Window
     public Window Parent
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => new(PInvoke.GetAncestor(Handle, GET_ANCESTOR_FLAGS.GA_PARENT));
+        get => new(PInvoke.GetAncestor(HWND, GET_ANCESTOR_FLAGS.GA_PARENT));
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => PInvoke.SetParent(Handle, value.Handle);
+        set => PInvoke.SetParent(HWND, value.HWND);
     }
 
     /// <summary>
@@ -46,6 +43,6 @@ partial struct Window
     public Window Root
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => new(PInvoke.GetAncestor(Handle, GET_ANCESTOR_FLAGS.GA_ROOT));
+        get => new(PInvoke.GetAncestor(HWND, GET_ANCESTOR_FLAGS.GA_ROOT));
     }
 }

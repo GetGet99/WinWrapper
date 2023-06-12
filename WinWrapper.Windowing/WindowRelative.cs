@@ -2,7 +2,7 @@
 using Windows.Win32;
 using Windows.Win32.UI.WindowsAndMessaging;
 
-namespace WinWrapper;
+namespace WinWrapper.Windowing;
 
 public readonly struct WindowRelative
 {
@@ -20,7 +20,7 @@ public readonly struct WindowRelative
     public Window Above
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => Window.FromWindowHandle(PInvoke.GetWindow(LinkedWindow.Handle, GET_WINDOW_CMD.GW_HWNDPREV));
+        get => Window.FromWindowHandle(PInvoke.GetWindow(LinkedWindow.HWND, GET_WINDOW_CMD.GW_HWNDPREV));
     }
     /// <summary>
     /// Get the <see cref="Window"/> below the current one
@@ -28,7 +28,7 @@ public readonly struct WindowRelative
     public Window Below
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => Window.FromWindowHandle(PInvoke.GetWindow(LinkedWindow.Handle, GET_WINDOW_CMD.GW_HWNDNEXT));
+        get => Window.FromWindowHandle(PInvoke.GetWindow(LinkedWindow.HWND, GET_WINDOW_CMD.GW_HWNDNEXT));
     } 
     static IEnumerable<Window> GetBelows(Window refernece)
     {

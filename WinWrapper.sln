@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinWrapper", "WinWrapper\WinWrapper.csproj", "{018E6411-8711-48F3-83CC-78A608057E4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinWrapper", "WinWrapper\WinWrapper.csproj", "{018E6411-8711-48F3-83CC-78A608057E4F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinWrapper.Taskbar", "WinWrapper.Taskbar\WinWrapper.Taskbar.csproj", "{8391BD68-79D3-466F-BE47-487DF0C9B97B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinWrapper.Input", "WinWrapper.Input\WinWrapper.Input.csproj", "{9DA12B3A-FDBC-4236-AE3A-142A5FDABC6B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinWrapper.Windowing", "WinWrapper.Windowing\WinWrapper.Windowing.csproj", "{E472E0C3-56D8-4EA4-A84E-7B65AF5C3984}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinWrapperTest", "WinWrapperTest\WinWrapperTest.csproj", "{F6C15477-FF39-4A1E-B503-77423D8D38DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{018E6411-8711-48F3-83CC-78A608057E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{018E6411-8711-48F3-83CC-78A608057E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{018E6411-8711-48F3-83CC-78A608057E4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8391BD68-79D3-466F-BE47-487DF0C9B97B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8391BD68-79D3-466F-BE47-487DF0C9B97B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8391BD68-79D3-466F-BE47-487DF0C9B97B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8391BD68-79D3-466F-BE47-487DF0C9B97B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DA12B3A-FDBC-4236-AE3A-142A5FDABC6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA12B3A-FDBC-4236-AE3A-142A5FDABC6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA12B3A-FDBC-4236-AE3A-142A5FDABC6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA12B3A-FDBC-4236-AE3A-142A5FDABC6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E472E0C3-56D8-4EA4-A84E-7B65AF5C3984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E472E0C3-56D8-4EA4-A84E-7B65AF5C3984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E472E0C3-56D8-4EA4-A84E-7B65AF5C3984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E472E0C3-56D8-4EA4-A84E-7B65AF5C3984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C15477-FF39-4A1E-B503-77423D8D38DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C15477-FF39-4A1E-B503-77423D8D38DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C15477-FF39-4A1E-B503-77423D8D38DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C15477-FF39-4A1E-B503-77423D8D38DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -61,9 +61,6 @@ FlashWindow
 SetParent
 GetAncestor
 
-WM_CLOSE
-WM_GETICON
-
 CW_USEDEFAULT
 
 
@@ -86,7 +83,6 @@ MONITORINFOF_PRIMARY
 GetCursorPos
 
 LoadImage
-WM_SETICON
 
 SetWindowsHookEx
 CallNextHookEx
@@ -118,23 +114,17 @@ GetRgnBox
 DwmGetWindowAttribute
 DwmSetWindowAttribute
 
-WM_SYSCOMMAND
-WM_LBUTTONUP
 RBHT_CAPTION
 ReleaseCapture
 
-WM_NCHITTEST
 HTCLIENT
 HTCAPTION
-WM_NCLBUTTONDOWN
 
 
 GetProcessId
 
 GetModuleHandle
 CreateMenu
-
-WM_ACTIVATE
 
 DwmRegisterThumbnail
 
@@ -159,7 +149,6 @@ UPDATE_LAYERED_WINDOW_FLAGS
 
 DwmSetIconicThumbnail
 DwmInvalidateIconicBitmaps
-WM_DWMSENDICONICTHUMBNAIL
 DwmSetIconicLivePreviewBitmap
 CreateCompatibleBitmap
 SetWinEventHook
@@ -168,12 +157,8 @@ EVENT_SYSTEM_SWITCHEND
 WINEVENT_OUTOFCONTEXT
 WINEVENT_SKIPOWNPROCESS
 KBDLLHOOKSTRUCT_FLAGS
-WM_DWMSENDICONICLIVEPREVIEWBITMAP
 DWM_SIT_DISPLAYFRAME
 
-WM_KEYDOWN
-WM_KEYUP
-WM_CHAR
 
 SetForegroundWindow
 
@@ -199,7 +184,6 @@ OpenEvent
 SetEvent
 IsWindowVisible
 
-WM_ERASEBKGND
 FillRect
 CreateSolidBrush
 SetLayeredWindowAttributes
@@ -209,10 +193,12 @@ DWM_WINDOW_CORNER_PREFERENCE
 TrackMouseEvent
 HOVER_DEFAULT
 
-WM_MOUSEMOVE
-WM_MOUSEHOVER
 
 SetClassLong
 GetClassLong
 
 DwmExtendFrameIntoClientArea
+
+WM_*
+
+GetCurrentProcess

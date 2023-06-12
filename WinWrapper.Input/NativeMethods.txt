@@ -1,0 +1,9 @@
+﻿GetCursorPos
+GetAsyncKeyState
+VIRTUAL_KEY
+ReleaseCapture
+
+LoadLibrary
+SetWindowsHookEx
+KBDLLHOOKSTRUCT
+CallNextHookEx

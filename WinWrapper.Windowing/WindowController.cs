@@ -6,9 +6,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Win32;
-using Windows.Win32.UI.Input.KeyboardAndMouse;
+using Windows.Win32.Foundation;
 
-namespace WinWrapper.Control;
+using WinWrapper.Input;
+namespace WinWrapper.Windowing;
 public enum ActivateStatus : byte
 {
     Active = 1,
@@ -36,26 +37,26 @@ public readonly struct WindowController
     public void FakeActivate(ActivateStatus activateStatus = ActivateStatus.ClickActive)
     {
         Window.SendMessage(
-            PInvoke.WM_ACTIVATE,
-            new((nuint)activateStatus),
-            new(Window.Handle)
+            WindowMessages.Activate,
+            new WPARAM((nuint)activateStatus),
+            new(Window.HWND)
         );
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void SendMouse(MouseEventKind EventKind, Point Location)
     {
         Window.SendMessage(
-            (uint)EventKind,
-            0,
+            (WindowMessages)EventKind,
+            default(WPARAM),
             Location.Y * 0x10000 + Location.X
         );
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void SendKey(bool IsKeyDown, VIRTUAL_KEY KeyCode)
+    public void SendKey(bool IsKeyDown, VirtualKey KeyCode)
     {
         Window.SendMessage(
-            IsKeyDown ? PInvoke.WM_KEYDOWN : PInvoke.WM_KEYUP,
-            new((nuint)KeyCode),
+            IsKeyDown ? WindowMessages.KeyDown : WindowMessages.KeyUp,
+            new WPARAM((nuint)KeyCode),
             IsKeyDown ? 0 : 1
         );
     }
@@ -63,9 +64,9 @@ public readonly struct WindowController
     public void SendChar(char Char)
     {
         Window.SendMessage(
-            PInvoke.WM_CHAR,
+            WindowMessages.Char,
             Char,
-            0
+            default(LPARAM)
         );
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

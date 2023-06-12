@@ -12,12 +12,14 @@ namespace WinWrapper;
 public readonly struct Icon : IDisposable
 {
     readonly HICON Handle;
-    public Icon(HICON IconHandle)
+    private Icon(HICON IconHandle)
     {
         Handle = IconHandle;
     }
-    public System.Drawing.Icon ToSysDrawIcon() => System.Drawing.Icon.FromHandle(Handle);
-    public ICONINFO Info
+
+    internal static Icon FromHandle(HICON ProcessHandle) => new(ProcessHandle);
+    public static Icon FromHandle(nint ProcessHandle) => new((HICON)ProcessHandle);
+    internal ICONINFO Info
     {
         get
         {
@@ -29,9 +31,9 @@ public readonly struct Icon : IDisposable
             }
         }
     }
-    public HBITMAP BitmapColor => Info.hbmColor;
-    public HBITMAP BitmapMask => Info.hbmMask;
-    public HBITMAP Bitmap
+    internal HBITMAP BitmapColor => Info.hbmColor;
+    internal HBITMAP BitmapMask => Info.hbmMask;
+    internal HBITMAP Bitmap
     {
         get
         {
@@ -39,11 +41,13 @@ public readonly struct Icon : IDisposable
             return icon;
         }
     }
+    public nint HBitmap => Bitmap;
+
+    public System.Drawing.Icon ToSysDrawIcon() => System.Drawing.Icon.FromHandle(Handle);
     public System.Drawing.Bitmap ToSysDrawBitmap() => System.Drawing.Bitmap.FromHicon(Handle);
 
     public void Dispose()
     {
-        
         GC.SuppressFinalize(this);
     }
 }

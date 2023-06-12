@@ -10,11 +10,12 @@ namespace WinWrapper;
 
 public partial struct Display
 {
-    public readonly HMONITOR Handle;
+    private readonly HMONITOR HMONITOR;
+    public readonly nint Handle => HMONITOR.Value;
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private Display(HMONITOR HMonitor)
     {
-        Handle = HMonitor;
+        HMONITOR = HMonitor;
     }
     /// <summary>
     /// Returns the <see cref="Display"/> is NULL
@@ -22,25 +23,27 @@ public partial struct Display
     public bool IsNull
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => Handle.Value != 0;
+        get => HMONITOR.Value != 0;
     }
     public override string ToString()
-        => IsNull ? $"{nameof(Display)} {Handle.Value}" : $"Invalid {nameof(Display)} ({Handle.Value})";
+        => IsNull ? $"{nameof(Display)} {HMONITOR.Value}" : $"Invalid {nameof(Display)} ({HMONITOR.Value})";
     /// <summary>
     /// Returns the scale factor of the <see cref="Display"/>
     /// </summary>
+#if NET5_0_OR_GREATER
     [SupportedOSPlatform("windows8.1")]
+#endif
     public int ScaleFactor
     {
         get
         {
-            PInvoke.GetScaleFactorForMonitor(Handle, out var scaleFactor).ThrowOnFailure();
+            PInvoke.GetScaleFactorForMonitor(HMONITOR, out var scaleFactor).ThrowOnFailure();
             if (scaleFactor == 0) scaleFactor = DEVICE_SCALE_FACTOR.SCALE_100_PERCENT;
             return (int)scaleFactor;
         }
     }
 
-    public MONITORINFO MonitorInfo
+    internal MONITORINFO MonitorInfo
     {
         get
         {
@@ -49,7 +52,7 @@ public partial struct Display
             {
                 m = new() { cbSize = (uint)sizeof(MONITORINFO), dwFlags = (uint)MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST };
             }
-            PInvoke.GetMonitorInfo(Handle, ref m).ThrowOnFailure();
+            PInvoke.GetMonitorInfo(HMONITOR, ref m).ThrowOnFailure();
             return m;
         }
     }

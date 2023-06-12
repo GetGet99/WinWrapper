@@ -1,0 +1,8 @@
+﻿ShellExecute
+
+OpenEvent
+SetEvent
+
+ITaskbarList3
+
+GetDC

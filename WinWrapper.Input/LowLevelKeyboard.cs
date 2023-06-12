@@ -3,14 +3,14 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Windows.System;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
+using WinWrapper.Input;
 
 namespace WinWrapper;
 
-public delegate void LowLevelKeyboardEventHandle(KBDLLHOOKSTRUCT eventDetails, KeyboardState state, ref bool Handled);
+public delegate void LowLevelKeyboardEventHandle(KeyboardHookInfo eventDetails, KeyboardState state, ref bool Handled);
 public class LowLevelKeyboard : IDisposable
 {
     static LowLevelKeyboard? Singleton;
@@ -110,9 +110,17 @@ public class LowLevelKeyboard : IDisposable
         
         if (nCode < 0) goto End;
 
-        
+        var obj = *(KBDLLHOOKSTRUCT*)lParam.Value;
+
         _KeyboardPressed?.Invoke(
-            *(KBDLLHOOKSTRUCT*)lParam.Value,
+            new()
+            {
+                DWExtraInfo = obj.dwExtraInfo,
+                Flags = (KeyboardHookInfoFlags)obj.flags,
+                ScanCode = obj.scanCode,
+                Time = obj.time,
+                KeyCode = (VirtualKey)obj.vkCode
+            },
             (KeyboardState)wParam.Value,
             ref fEatKeyStroke
         );
@@ -129,4 +137,47 @@ public enum KeyboardState
     KeyUp = 0x0101,
     SystemKeyDown = 0x0104,
     SystemKeyUp = 0x0105
+}
+
+[global::System.CodeDom.Compiler.GeneratedCode("Microsoft.Windows.CsWin32", "0.3.2-beta+d18600d19b")]
+public partial struct KeyboardHookInfo
+{
+    /// <summary>
+    /// <para>Type: <b>DWORD</b> A <a href="https://docs.microsoft.com/windows/desktop/inputdev/virtual-key-codes">virtual-key code</a>. The code must be a value in the range 1 to 254.</para>
+    /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/ns-winuser-kbdllhookstruct#members">Read more on docs.microsoft.com</see>.</para>
+    /// </summary>
+    public VirtualKey KeyCode;
+
+    /// <summary>
+    /// <para>Type: <b>DWORD</b> A hardware scan code for the key.</para>
+    /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/ns-winuser-kbdllhookstruct#members">Read more on docs.microsoft.com</see>.</para>
+    /// </summary>
+    public uint ScanCode;
+
+    /// <summary>
+    /// <para>Type: <b>DWORD</b> The extended-key flag, event-injected flags, context code, and transition-state flag. This member is specified as follows. An application can use the following values to test the keystroke flags. Testing LLKHF_INJECTED (bit 4) will tell you whether the event was injected. If it was, then testing LLKHF_LOWER_IL_INJECTED (bit 1) will tell you whether or not the event was injected from a process running at lower integrity level. </para>
+    /// <para>This doc was truncated.</para>
+    /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/ns-winuser-kbdllhookstruct#members">Read more on docs.microsoft.com</see>.</para>
+    /// </summary>
+    public KeyboardHookInfoFlags Flags;
+
+    /// <summary>
+    /// <para>Type: <b>DWORD</b> The time stamp for this message, equivalent to what <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-getmessagetime">GetMessageTime</a> would return for this message.</para>
+    /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/ns-winuser-kbdllhookstruct#members">Read more on docs.microsoft.com</see>.</para>
+    /// </summary>
+    public uint Time;
+
+    /// <summary>
+    /// <para>Type: <b>ULONG_PTR</b> Additional information associated with the message.</para>
+    /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/ns-winuser-kbdllhookstruct#members">Read more on docs.microsoft.com</see>.</para>
+    /// </summary>
+    public nuint DWExtraInfo;
+}
+public enum KeyboardHookInfoFlags : uint
+{
+    LLKHF_EXTENDED = KBDLLHOOKSTRUCT_FLAGS.LLKHF_EXTENDED,
+    LLKHF_ALTDOWN = KBDLLHOOKSTRUCT_FLAGS.LLKHF_ALTDOWN,
+    LLKHF_UP = KBDLLHOOKSTRUCT_FLAGS.LLKHF_UP,
+    LLKHF_INJECTED = KBDLLHOOKSTRUCT_FLAGS.LLKHF_INJECTED,
+    LLKHF_LOWER_IL_INJECTED = KBDLLHOOKSTRUCT_FLAGS.LLKHF_LOWER_IL_INJECTED,
 }

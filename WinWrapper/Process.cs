@@ -15,7 +15,10 @@ public struct Process
     {
         Handle = ProcessHandle;
     }
-    public static Process FromHandle(HANDLE ProcessHandle) => new(ProcessHandle);
-    public uint Id => PInvoke.GetProcessId(Handle);
-    public SysDiaProcess GetDotNetProcess => SysDiaProcess.GetProcessById((int)Id);
+    internal static Process FromHandle(HANDLE ProcessHandle) => new(ProcessHandle);
+    public static Process FromHandle(nint ProcessHandle) => new((HANDLE)ProcessHandle);
+    public readonly uint Id => PInvoke.GetProcessId(Handle);
+    public readonly SysDiaProcess GetDotNetProcess => SysDiaProcess.GetProcessById((int)Id);
+
+    public static Process Current => new(PInvoke.GetCurrentProcess());
 }
