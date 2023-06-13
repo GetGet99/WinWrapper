@@ -10,7 +10,7 @@ public interface IDwmWindowAttribute
 }
 public partial struct Window : IDwmWindowAttribute
 {
-    IDwmWindowAttribute DwmAttribute => this;
+    public IDwmWindowAttribute DwmAttribute => this;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     readonly unsafe T IDwmWindowAttribute.Get<T>(DwmWindowAttribute dwAttribute)

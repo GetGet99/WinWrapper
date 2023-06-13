@@ -48,7 +48,7 @@ partial struct Window : IWindowStyling, IWindowStyleFlag, IWindowExStyleFlag
     }
 
 
-    WindowStyles IWindowStyling.Style
+    public WindowStyles Style
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => (WindowStyles)WindowLong[WindowLongPtrIndex.GWL_Style];
@@ -56,7 +56,7 @@ partial struct Window : IWindowStyling, IWindowStyleFlag, IWindowExStyleFlag
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set => WindowLong[WindowLongPtrIndex.GWL_Style] = (nint)value;
     }
-    WindowExStyles IWindowStyling.ExStyle
+    public WindowExStyles ExStyle
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => (WindowExStyles)WindowLong[WindowLongPtrIndex.GWL_ExStyle];

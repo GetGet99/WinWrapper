@@ -16,13 +16,13 @@ public static class Taskbar
     static TaskbarInstance TaskbarInstance = Activator.CreateInstance<TaskbarInstance>();
     static ITaskbarList3 ITaskbarList3 = (ITaskbarList3)TaskbarInstance;
 
-    public static unsafe bool SetOverlayIcon(Window window, nint Icon, string AlternateText)
+    public static unsafe bool SetOverlayIcon(Window window, Icon Icon, string AlternateText)
     {
         try
         {
             fixed (char* alternateText = AlternateText)
             {
-                ITaskbarList3.SetOverlayIcon(new(window.Handle), new(Icon), alternateText);
+                ITaskbarList3.SetOverlayIcon(new(window.Handle), new(Icon.Handle), alternateText);
             }
         }
         catch (Exception)

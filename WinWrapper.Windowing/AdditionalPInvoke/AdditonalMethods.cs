@@ -129,12 +129,3 @@ partial class PInvoke
     //internal static extern int GdipCreateBitmapFromHICON(HICON hicon, out HBITMAP bitmap);
 
 }
-
-public enum DWM_SYSTEMBACKDROP_TYPE : uint
-{
-    DWMSBT_AUTO = 0,
-    DWMSBT_NONE = 1,
-    DWMSBT_MAINWINDOW = 2,
-    DWMSBT_TRANSIENTWINDOW = 3,
-    DWMSBT_TABBEDWINDOW = 4
-}

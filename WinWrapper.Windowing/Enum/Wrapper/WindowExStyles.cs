@@ -1,5 +1,5 @@
 ﻿using Windows.Win32.UI.WindowsAndMessaging;
-namespace WinWrapper;
+namespace WinWrapper.Windowing;
 [Flags]
 public enum WindowExStyles : uint
 {

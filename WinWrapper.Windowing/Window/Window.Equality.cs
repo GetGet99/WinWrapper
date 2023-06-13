@@ -10,7 +10,7 @@ public readonly partial struct Window
     /// </summary>
     public override string ToString()
     {
-        return IsValid ? $"Window {HWND.Value} {TitleText} ({Class.ClassName})" : $"Invalid Window ({HWND.Value})";
+        return IsValid ? $"Window {HWND.Value} {TitleText} ({Class.Name})" : $"Invalid Window ({HWND.Value})";
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

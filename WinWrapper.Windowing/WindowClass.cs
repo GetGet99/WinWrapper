@@ -13,8 +13,8 @@ public readonly struct WindowClass
 {
     public unsafe delegate nint WindowProc(Window hWnd, uint WindowMessage, nuint wParam, nint lParam);
     readonly WNDPROC? WndProc = default;
-    public readonly string ClassName;
-    private WindowClass(string ClassName, bool _) { this.ClassName = ClassName; }
+    public readonly string Name;
+    private WindowClass(string ClassName, bool _) { this.Name = ClassName; }
     internal unsafe WindowClass(
         string ClassName,
         WindowProc? WndProc = null,
@@ -22,7 +22,7 @@ public readonly struct WindowClass
         HBRUSH BackgroundBrush = default
     )
     {
-        this.ClassName = ClassName;
+        this.Name = ClassName;
         if (WndProc != null)
             this.WndProc = (hWnd, WM, WP, LP) => new(WndProc.Invoke(
                 Window.FromWindowHandle(hWnd),

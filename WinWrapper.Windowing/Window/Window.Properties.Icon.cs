@@ -8,7 +8,7 @@ namespace WinWrapper.Windowing;
 partial struct Window
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    public nint SmallIconPtr
+    public Icon SmallIcon
     {
         get
         {
@@ -16,39 +16,39 @@ partial struct Window
             if (handle is 0) handle = (nint)SendMessage(WindowMessages.GetIcon, PInvoke.ICON_SMALL2, default(LPARAM));
             if (handle is 0) handle = (nint)WindowClassLong[WindowClassLongIndex.GCLP_HICONSM];
 
-            return handle;
+            return Icon.FromHandle(handle);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
-            PInvoke.SendMessage(HWND, PInvoke.WM_SETICON, PInvoke.ICON_SMALL, value);
+            SendMessage(WindowMessages.SetIcon, PInvoke.ICON_SMALL, value.Handle);
         }
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    public nint LargeIconPtr
+    public Icon LargeIcon
     {
         get
         {
             var handle = (nint)SendMessage(WindowMessages.GetIcon, PInvoke.ICON_BIG, default(LPARAM));
             if (handle == 0) handle = (nint)WindowClassLong[WindowClassLongIndex.GCLP_HICON];
-            return handle;
+            return Icon.FromHandle(handle);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
-            PInvoke.SendMessage(HWND, PInvoke.WM_SETICON, PInvoke.ICON_BIG, value);
+            SendMessage(WindowMessages.SetIcon, PInvoke.ICON_BIG, value.Handle);
         }
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    public Bitmap? SmallIcon
+    public Bitmap? SmallIconAsBitmap
     {
         get
         {
             try
             {
-                var handle = SmallIconPtr;
-                if (handle is 0) return null;
-                return Bitmap.FromHicon(handle);
+                var icon = SmallIcon;
+                if (icon.Handle is 0) return null;
+                return Bitmap.FromHicon(icon.Handle);
             }
             catch
             {
@@ -57,15 +57,15 @@ partial struct Window
         }
     }
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    public Bitmap? LargeIcon
+    public Bitmap? LargeIconAsBitmap
     {
         get
         {
             try
             {
-                var handle = LargeIconPtr;
-                if (handle is 0) return null;
-                return Bitmap.FromHicon(handle);
+                var icon = LargeIcon;
+                if (icon.Handle is 0) return null;
+                return Bitmap.FromHicon(icon.Handle);
             }
             catch
             {

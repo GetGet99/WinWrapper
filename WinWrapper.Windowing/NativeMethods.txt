@@ -90,3 +90,5 @@ CreateMenu
 CW_USEDEFAULT
 
 HANDLE
+
+RegisterWindowMessage

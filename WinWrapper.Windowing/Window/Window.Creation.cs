@@ -32,10 +32,10 @@ partial struct Window : IEquatable<Window>
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Window Find(WindowClass Class, string? WindowName)
-        => new(PInvoke.FindWindow(Class.ClassName, WindowName));
+        => new(PInvoke.FindWindow(Class.Name, WindowName));
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Window Find(Window Parent, Window ChildAfter, WindowClass Class, string? WindowName)
-        => new(PInvoke.FindWindowEx(Parent.HWND, ChildAfter.HWND, Class.ClassName, WindowName));
+        => new(PInvoke.FindWindowEx(Parent.HWND, ChildAfter.HWND, Class.Name, WindowName));
     public unsafe static Window CreateNewWindow(string Title, WindowClass windowClass, Rectangle Bounds = default)
     {
         if (Bounds == default)
@@ -46,7 +46,7 @@ partial struct Window : IEquatable<Window>
 
         return new(PInvoke.CreateWindowEx(
             WINDOW_EX_STYLE.WS_EX_OVERLAPPEDWINDOW,
-            windowClass.ClassName,
+            windowClass.Name,
             Title,
             WINDOW_STYLE.WS_OVERLAPPEDWINDOW,
             Bounds.X,

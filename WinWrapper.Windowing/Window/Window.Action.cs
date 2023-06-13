@@ -147,8 +147,8 @@ partial struct Window
     public void DragMove()
     {
         Cursor.ReleaseCapture();
-        PInvoke.SendMessage(HWND, PInvoke.WM_LBUTTONUP, default, default);
-        PInvoke.SendMessage(HWND, PInvoke.WM_SYSCOMMAND, new(PInvoke.SC_MOUSEMOVE), default);
+        SendMessage(WindowMessages.MouseLeftButtonUp, default(WPARAM), default);
+        SendMessage(WindowMessages.SysCommand, PInvoke.SC_MOUSEMOVE, default(LPARAM));
     }
 
     /// <summary>
@@ -156,8 +156,8 @@ partial struct Window
     /// </summary>
     public void DragMoveRightClick()
     {
-        PInvoke.SendMessage(HWND, PInvoke.WM_SYSCOMMAND, new(PInvoke.SC_MOUSEMENU), default);
-        //PInvoke.SendMessage(Handle, PInvoke.WM_RBUTTONUP, default, default);
+        SendMessage(WindowMessages.SysCommand, PInvoke.SC_MOUSEMOVE, default(LPARAM));
+        //SendMessage(WindowMessages.MouseRightButtonUp, default(WPARAM), default);
     }
 
     internal bool SetWindowPlacement(WINDOWPLACEMENT placement)
